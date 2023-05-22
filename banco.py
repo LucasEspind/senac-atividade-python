@@ -27,7 +27,7 @@ while True:
                 conta = ContaPoupanca(agencia, numeroConta, saldo)
             else:
                 print("Tipo de conta errado!")
-            nomeCliente = str(input("Nome do titular da conta: "))
+            nomeCliente = str(input("Nome do titular da conta: ")).upper()
             idadeCliente = int(input("Idade do Titular: "))
             cliente = Cliente(nomeCliente, idadeCliente, conta)
             banco = Banco(conta, cliente)
@@ -41,16 +41,17 @@ while True:
             
         case 2:
             numero = int(input("Número da conta: "))
-            nome = str(input("Nome do Titular: "))
+            nome = str(input("Nome do Titular: ")).upper()
             agencia = int(input("Agencia do Titular: "))
             existe = False
             for c in todasContas:
                 if c._conta.NumeroConta == numero and c._cliente.Nome == nome and c._conta.Agencia == agencia:
-                    existe == True
                     banco = c
+                    existe = banco.verificaAgencia(banco)                    
             if existe:                
                 continuar = True
                 while continuar:
+                    linha()
                     print(f"Saldo atual: {banco._conta.Saldo}\nLimite atual: {banco._conta.Limite}")
                     valor = float(input("Quanto deseja sacar? R$ "))
                     banco._conta.Sacar(valor)
@@ -73,7 +74,8 @@ while True:
             for c in todasContas:
                 if c._conta.NumeroConta == numero and c._cliente.Nome == nome and c._conta.Agencia == agencia:
                     banco = c
-            if banco.verificaAgencia(banco):
+                    existe = banco.verificaAgencia(banco)                    
+            if existe:
                 linha()
                 print(f"Agência: {banco._conta.Agencia}\nNumero da conta: {banco._conta.NumeroConta}\nSaldo em conta: {banco._conta.Saldo}\nTipo da conta: {banco._conta.__class__.__name__}\nNome do Titular: {banco._cliente.Nome}\nIdade do Titular: {banco._cliente.Idade}")
                 sleep(5)
@@ -90,7 +92,7 @@ while True:
             for c in todasContas:
                 if c._conta.NumeroConta == numero and c._cliente.Nome == nome and c._conta.Agencia == agencia:
                     banco = c
-            existe = banco.verificaAgencia(banco)
+                    existe = banco.verificaAgencia(banco)
             if existe:
                 linha()
                 adicionar = float(input("Saldo a Adicionar: R$ "))
